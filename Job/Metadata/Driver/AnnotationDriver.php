@@ -14,6 +14,7 @@ use Abc\Bundle\JobBundle\Annotation\ParamType;
 use Abc\Bundle\JobBundle\Annotation\ReturnType;
 use Abc\Bundle\JobBundle\Job\Metadata\ClassMetadata;
 use Doctrine\Common\Annotations\Reader;
+use Metadata\ClassMetadata as DoctrineMetadata;
 use Metadata\Driver\DriverInterface;
 
 /**
@@ -37,9 +38,9 @@ class AnnotationDriver implements DriverInterface
     /**
      * @param \ReflectionClass $class
      *
-     * @return \Metadata\ClassMetadata
+     * @return DoctrineMetadata
      */
-    public function loadMetadataForClass(\ReflectionClass $class)
+    public function loadMetadataForClass(\ReflectionClass $class): ?DoctrineMetadata
     {
         $classMetadata                  = new ClassMetadata($name = $class->name);
         $classMetadata->fileResources[] = $class->getFilename();
