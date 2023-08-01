@@ -11,7 +11,7 @@
 namespace Abc\Bundle\JobBundle\Event;
 
 use Abc\Bundle\JobBundle\Job\JobInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * @author Hannes Schulz <hannes.schulz@aboutcoders.com>
