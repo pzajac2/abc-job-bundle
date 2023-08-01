@@ -22,6 +22,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ConsumerCommand extends Command
 {
+    protected static $defaultName = 'abc:job:consume';
+    protected static $defaultDescription = 'Consume jobs from a queue';
+
     /**
      * @var ConsumerInterface
      */
@@ -41,8 +44,8 @@ class ConsumerCommand extends Command
      */
     public function configure()
     {
-        $this->setName('abc:job:consume');
-        $this->setDescription('Consume jobs from a queue');
+        $this->setName(self::$defaultName);
+        $this->setDescription(self::$defaultDescription);
 
         $this
             ->addArgument('queue', InputArgument::REQUIRED, 'Name of queue that will be consumed.')
