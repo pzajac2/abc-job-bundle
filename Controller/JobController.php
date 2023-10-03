@@ -22,7 +22,7 @@ use Abc\Bundle\JobBundle\Validator\Constraints as AbcAssert;
 use Abc\Bundle\JobBundle\Model\JobList;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -38,20 +38,20 @@ class JobController extends BaseController
      * @Operation(
      *     tags={"AbcJobBundle"},
      *     summary="Returns a collection of jobs",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful",
-     *         @SWG\Schema(
+     *         @OA\Schema(
      *              type="array",
      *              @Model(type=Abc\Bundle\JobBundle\Model\JobList::class)
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="400",
      *         description="Returned when request is invalid",
      *         @Model(type=Abc\Bundle\JobBundle\Api\BadRequestResponse::class)
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         type="integer",
@@ -60,7 +60,7 @@ class JobController extends BaseController
      *         required=false,
      *         description="The page number of the result set"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="limit",
      *         in="query",
      *         type="integer",
@@ -69,7 +69,7 @@ class JobController extends BaseController
      *         required=false,
      *         description="The page size"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="sortCol",
      *         in="query",
      *         type="string",
@@ -78,7 +78,7 @@ class JobController extends BaseController
      *         required=false,
      *         description="The sort column"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="sortDir",
      *         in="query",
      *         type="string",
@@ -87,11 +87,11 @@ class JobController extends BaseController
      *         required=false,
      *         description="The sort direction"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="criteria",
      *         in="query",
      *         type="array",
-     *         @SWG\Items(
+     *         @OA\Items(
      *             type="string"
      *         ),
      *         required=false,
@@ -139,15 +139,15 @@ class JobController extends BaseController
      * @Operation(
      *     tags={"AbcJobBundle"},
      *     summary="Returns a job",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="201",
      *         description="Returned when successful"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="404",
      *         description="Returned when node not found"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="ticket",
      *         in="query",
      *         type="string",
@@ -173,15 +173,15 @@ class JobController extends BaseController
      * @Operation(
      *     tags={"AbcJobBundle"},
      *     summary="Adds a job",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="400",
      *         description="Form validation error"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="ticket",
      *         in="query",
      *         type="string",
@@ -216,20 +216,20 @@ class JobController extends BaseController
      * @Operation(
      *     tags={"AbcJobBundle"},
      *     summary="Updates a job",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful",
      *         @Model(type=Abc\Bundle\JobBundle\Model\Job::class)
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="400",
      *         description="Form validation error"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="404",
      *         description="Returned when job not found"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="ticket",
      *         in="query",
      *         type="string",
@@ -264,23 +264,23 @@ class JobController extends BaseController
      * @Operation(
      *     tags={"AbcJobBundle"},
      *     summary="Cancels a job",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful",
      *         @Model(type=Abc\Bundle\JobBundle\Model\JobList::class)
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="404",
      *         description="Returned when job not found"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="ticket",
      *         in="query",
      *         type="string",
      *         required=true,
      *         description="The job ticket"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="force",
      *         in="query",
      *         type="boolean",
@@ -308,16 +308,16 @@ class JobController extends BaseController
      * @Operation(
      *     tags={"AbcJobBundle"},
      *     summary="Restarts a job",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful",
      *         @Model(type=Abc\Bundle\JobBundle\Model\JobList::class)
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="404",
      *         description="Returned when job not found"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="ticket",
      *         in="query",
      *         type="string",
@@ -343,19 +343,19 @@ class JobController extends BaseController
      * @Operation(
      *     tags={"AbcJobBundle"},
      *     summary="Returns the logs of a job",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful",
-     *         @SWG\Schema(
+     *         @OA\Schema(
      *              type="array",
      *              @Model(type=Abc\Bundle\JobBundle\Model\Log::class)
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="404",
      *         description="Returned when job not found"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="ticket",
      *         in="query",
      *         type="string",

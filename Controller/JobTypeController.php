@@ -12,7 +12,7 @@ namespace Abc\Bundle\JobBundle\Controller;
 
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -24,12 +24,12 @@ class JobTypeController extends BaseController
      * @Operation(
      *     tags={"AbcJobBundle"},
      *     summary="Returns a collection of job types",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful",
-     *         @SWG\Schema(
+     *         @OA\Schema(
      *              type="array",
-     *              @SWG\Items(
+     *              @OA\Items(
      *                  type="string"
      *              )
      *         )
