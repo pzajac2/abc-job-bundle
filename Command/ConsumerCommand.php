@@ -64,5 +64,7 @@ class ConsumerCommand extends Command
             'max-messages'    => $input->getOption('max-messages'),
             'stop-when-empty' => $input->getOption('stop-when-empty')
         ]);
+
+        return 0;
     }
 }
