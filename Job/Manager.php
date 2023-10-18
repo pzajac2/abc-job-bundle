@@ -216,7 +216,7 @@ class Manager implements ManagerInterface
         }
 
         if (! $isProcessing || $force) {
-            $this->dispatcher->dispatch(JobEvents::JOB_TERMINATED, new TerminationEvent($job));
+            $this->dispatcher->dispatch(new TerminationEvent($job), JobEvents::JOB_TERMINATED);
             $message = $force ? 'Forced cancellation of job ' : 'Cancelled job ';
             $this->logger->info($message.$job->getTicket());
         } else {
@@ -325,7 +325,7 @@ class Manager implements ManagerInterface
         $this->jobManager->save($job);
 
         if (Status::isTerminated($job->getStatus())) {
-            $this->dispatcher->dispatch(JobEvents::JOB_TERMINATED, new TerminationEvent($job));
+            $this->dispatcher->dispatch(new TerminationEvent($job), JobEvents::JOB_TERMINATED);
         }
     }
 
@@ -407,18 +407,17 @@ class Manager implements ManagerInterface
 
     /**
      * @param string $eventName
-     * @param ExecutionEvent $event
+     * @param Event|\Symfony\Contracts\EventDispatcher\Event $event
      * @return void
      */
-    private function dispatchEvent($eventName, Event $event)
+    private function dispatchEvent($eventName, $event)
     {
         try {
-
             if ($event instanceof ExecutionEvent) {
                 $this->logger->debug(sprintf('Dispatch event %s or job %s', $eventName, $event->getJob()->getTicket()));
             }
 
-            $this->dispatcher->dispatch($eventName, $event);
+            $this->dispatcher->dispatch($event, $eventName);
         } catch (\Exception $e) {
             $this->logger->critical(sprintf('An event listener for event %s threw an exception (Error: %s)', $eventName, $e->getMessage()), ['exception' => $e]);
         }
