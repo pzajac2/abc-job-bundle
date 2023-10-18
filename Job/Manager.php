@@ -263,10 +263,19 @@ class Manager implements ManagerInterface
 
             return;
         }
+
         try {
             $this->locker->lock($this->getLockName($job));
         } catch (LockException $e) {
             $this->logger->warning('Failed to get lock for job '.$job->getTicket());
+
+            return;
+        } catch (\Throwable $e) {
+            $this->logger->error(sprintf(
+                'Failed to get lock for job %s. Error: %s',
+                $job->getTicket(),
+                $e->getMessage()
+            ));
 
             return;
         }
@@ -298,16 +307,6 @@ class Manager implements ManagerInterface
 
             $this->dispatchEvent(JobEvents::JOB_POST_EXECUTE, $event);
         } catch (\Throwable $e) {
-            $this->logger->warning(sprintf('Failed to execute job %s (Error: $s)', $job->getTicket(), $e->getMessage()), [
-                'job' => $job,
-                'exception' => $e,
-            ]);
-
-            $this->getJobLogger($job)->error($e->getMessage(), ['exception' => $e]);
-
-            $response = new ExceptionResponse($e);
-            $status = Status::ERROR();
-        } catch (\Exception $e) {
             $this->logger->warning(sprintf('Failed to execute job %s (Error: $s)', $job->getTicket(), $e->getMessage()), [
                 'job' => $job,
                 'exception' => $e,
@@ -431,7 +430,7 @@ class Manager implements ManagerInterface
      */
     private function getLockName(JobInterface $job)
     {
-        return self::JOB_LOCK_PREFIX.$job->getTicket();
+        return self::JOB_LOCK_PREFIX . $job->getTicket();
     }
 
     /**
@@ -442,7 +441,7 @@ class Manager implements ManagerInterface
     {
         $this->locker->release($this->getLockName($job));
 
-        $this->logger->debug('Released lock for job '.$job->getTicket());
+        $this->logger->debug('Released lock for job ' . $job->getTicket());
     }
 
     /**
