@@ -129,7 +129,7 @@ abstract class JobTestCase extends KernelTestCase
 
         $event = new ExecutionEvent($job, new Context());
 
-        static::getDispatcher()->dispatch(JobEvents::JOB_PRE_EXECUTE, $event);
+        static::getDispatcher()->dispatch($event, JobEvents::JOB_PRE_EXECUTE);
 
         return Invoker::resolveParameters(static::getJobType($type), $event->getContext(), $deserializedParameters);
     }

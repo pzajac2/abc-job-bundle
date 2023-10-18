@@ -148,7 +148,7 @@ class ServiceTest extends KernelTestCase
             ->method('onPreExecute')
             ->with($event);
 
-        $dispatcher->dispatch(JobEvents::JOB_PRE_EXECUTE, $event);
+        $dispatcher->dispatch($event, JobEvents::JOB_PRE_EXECUTE);
     }
 
     public function testScheduleListenerListensToSchedule()
@@ -174,7 +174,7 @@ class ServiceTest extends KernelTestCase
             ->method('onSchedule')
             ->with($event);
 
-        $dispatcher->dispatch(SchedulerEvents::SCHEDULE, $event);
+        $dispatcher->dispatch($event, SchedulerEvents::SCHEDULE);
     }
 
     public function testScheduleIteratorIsRegistered()

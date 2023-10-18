@@ -111,7 +111,7 @@ class ConsumerAdapter implements ConsumerInterface
 
             $backend->handle($message, $this->notificationDispatcher);
 
-            $this->eventDispatcher->dispatch(IterateEvent::EVENT_NAME, new IterateEvent($iterator, $backend, $message));
+            $this->eventDispatcher->dispatch(new IterateEvent($iterator, $backend, $message), IterateEvent::EVENT_NAME);
 
             if (null !== $this->options['max-messages'] && !(boolean)--$this->options['max-messages']) {
                 return false;
