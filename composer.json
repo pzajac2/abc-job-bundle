@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=8.2",
         "myclabs/php-enum": "^1.5",
         "gedmo/doctrine-extensions": "^3.0",
         "jms/serializer-bundle": "*",
