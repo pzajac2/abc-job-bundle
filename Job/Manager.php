@@ -307,7 +307,17 @@ class Manager implements ManagerInterface
 
             $this->dispatchEvent(JobEvents::JOB_POST_EXECUTE, $event);
         } catch (\Throwable $e) {
-            $this->logger->warning(sprintf('Failed to execute job %s (Error: $s)', $job->getTicket(), $e->getMessage()), [
+            $this->logger->warning(sprintf('Failed to execute job %s (Error: %s)', $job->getTicket(), $e->getMessage()), [
+                'job' => $job,
+                'exception' => $e,
+            ]);
+
+            $this->getJobLogger($job)->error($e->getMessage(), ['exception' => $e]);
+
+            $response = new ExceptionResponse($e);
+            $status = Status::ERROR();
+        } catch (\Exception $e) {
+            $this->logger->warning(sprintf('Failed to execute job %s (Error: %s)', $job->getTicket(), $e->getMessage()), [
                 'job' => $job,
                 'exception' => $e,
             ]);
